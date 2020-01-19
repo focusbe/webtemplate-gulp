@@ -1,23 +1,16 @@
-const { series, watch, task } = require("gulp");
+const { series, task } = require("gulp");
 const script = require("./modules/script");
 const css = require("./modules/css");
 const images = require("./modules/images");
 const html = require("./modules/html");
 const clean = require("./modules/clean");
 const publish = require("./modules/publish");
-const Config = require("./config");
+const Watch = require("./modules/watch");
+const server = require("./modules/server").start;
 // console.log(Config.game);
-function setWatch() {
-	watch(Config.src + "**/*.{js,ts}", script);
-	watch(Config.src + "**/*.{shtml,html}", html);
-	watch(Config.src + "**/*.{css,scss,less}", css);
-	watch(Config.src + "**/*.{png,jpg,gif,ico,svg}", images);
-}
-setWatch();
 function setTasks() {
-	task("publish", publish);
-	task("dev", series(clean, script, css, html, images));
+	task("pubdev", publish);
+	task("dev", series(clean, html, css, images, script, Watch, server));
 }
 setTasks();
-
 exports.default = function() {};

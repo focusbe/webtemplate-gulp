@@ -1,5 +1,5 @@
 //打包 打包scss,less
-const Config = require("../config");
+const config = require("../config");
 const { src, dest } = require("gulp");
 const less = require("gulp-less");
 const sass = require("gulp-sass");
@@ -7,9 +7,9 @@ const gulpif = require("gulp-if");
 const stylus = require("gulp-stylus");
 const version = require("./version");
 const merge = require("merge-stream");
-const reload = require("./server");
+const reload = require("./server").reload;
 const replace = require("gulp-replace");
-function Css() {
+async function css() {
 	let imgreplace = function() {
 		return replace(/url\((\S+)\)/gi, function(...param) {
 			// param.splice(param.length - 2, 2);
@@ -20,7 +20,7 @@ function Css() {
 			return param[0];
 		});
 	};
-	var scssTask = src([`${Config.src}**/*.{scss,sass,less}`, `!${Config.src}lib/**/*.{scss,sass,less}`])
+	var scssTask = src([`${config.src}**/*.{scss,sass,less}`, `!${config.src}lib/**/*.{scss,sass,less}`])
 		.pipe(
 			gulpif(
 				function(file) {
@@ -31,14 +31,14 @@ function Css() {
 			)
 		)
 		.pipe(imgreplace())
-		.pipe(dest(Config.dist))
+		.pipe(dest(config.dist))
 		.pipe(reload({ stream: true }));
-	var stylusTask = src([`${Config.src}**/*.{styl,stylus}`, `!${Config.src}lib/**/*.{styl,stylus}`])
+	var stylusTask = src([`${config.src}**/*.{styl,stylus}`, `!${config.src}lib/**/*.{styl,stylus}`])
 		.pipe(stylus())
 		.pipe(imgreplace())
-		.pipe(dest(Config.dist))
+		.pipe(dest(config.dist))
 		.pipe(reload({ stream: true }));
 	return merge(scssTask, stylusTask);
 }
 
-module.exports = Css;
+module.exports = css;

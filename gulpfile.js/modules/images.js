@@ -1,5 +1,5 @@
 //打包 打包images
-const Config = require("../config");
+const config = require("../config");
 const fse = require("fs-extra");
 const tinypng = require("tinypngjs");
 const { src } = require("gulp");
@@ -14,45 +14,64 @@ if (!fse.existsSync(cachePath)) {
 const adapter = new FileSync(path.resolve(__dirname, "../cache/db.json"));
 const db = low(adapter);
 db.defaults({ images: [] }).write();
-const reload = require("./server");
-function Images() {
-	return src(`${Config.src}**/*.{png,jpg,gif,ico,svg}`).pipe(
-		through.obj(async function(file, enc, cb) {
-			try {
-				var stat = await fse.stat(file.path);
-				var compressed = db
-					.get("images")
-					.find({ file: file.path })
-					.value();
-				if (!stat || !stat.mtime || !compressed || compressed.mtime.toString() != stat.mtime.toString()) {
-					try {
-						await tinypng.compressImg(file.path, file.path);
-						stat = await fse.stat(file.path);
-						if (!compressed) {
-							db.get("images")
-								.push({ file: file.path, mtime: stat.mtime || "" })
-								.write();
-						} else {
-							db.get("images")
-								.find({ file: file.path })
-								.assign({ mtime: stat.mtime || "" })
-								.write();
-						}
-						
-						cb(null, file);
-					} catch (error) {}
-				} else {
-					let outPath = path.resolve(file.base, "../", Config.dist, file.relative);
-					await fse.copy(file.path, outPath);
-					reload({ stream: true });
-					cb(null, file);
+const reload = require("./server").reload;
+const readline = require("readline");
+function images(cb2) {
+	let total = 0;
+	let loaded = 0;
+	src(`${config.src}**/*.{png,jpg,gif,ico,svg}`).pipe(
+		through.obj(function(file, enc, cb) {
+			// console.log(enc);
+			cb();
+			total++;
+			let outPath = path.resolve(file.base, "../", config.dist, file.relative);
+			function checkLoaded() {
+				function isEnd() {
+					loaded++;
+					//process.stdout.write("#", "utf-8");
+					if (loaded >= total) {
+						cb2();
+					}
 				}
-				//console.log(outPath);
-			} catch (error) {
-				
-				cb(error, file);
+				fse.copy(file.path, outPath)
+					.then(res => {
+						isEnd();
+					})
+					.catch(() => {
+						isEnd();
+					});
+			}
+			var stat = fse.statSync(file.path);
+			var compressed = db
+				.get("images")
+				.find({ file: file.path })
+				.value();
+			if (!stat || !stat.mtimeMs || !compressed || compressed.mtimeMs != stat.mtimeMs) {
+				tinypng
+					.compressImg(file.path, file.path)
+					.then(res => {
+						if (!!res) {
+							stat = fse.statSync(file.path);
+							if (!compressed) {
+								db.get("images")
+									.push({ file: file.path, mtimeMs: stat.mtimeMs || "" })
+									.write();
+							} else {
+								db.get("images")
+									.find({ file: file.path })
+									.assign({ mtimeMs: stat.mtimeMs || "" })
+									.write();
+							}
+						}
+						checkLoaded();
+					})
+					.catch(err => {
+						checkLoaded();
+					});
+			} else {
+				checkLoaded();
 			}
 		})
 	);
 }
-module.exports = Images;
+module.exports = images;

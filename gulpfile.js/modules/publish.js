@@ -5,6 +5,11 @@ const serverList = ["common", "w1", "w2"];
 const readlineSync = require("readline-sync");
 const howLong = require("../libs/howlong");
 async function PublishDev() {
+	console.log(config);
+	if (!config.game || !config.actname) {
+		console.log("请配置config.json 中的game和actname");
+		return;
+	}
 	let gameDevPath;
 	let gamepathisexist;
 	for (var i in serverList) {
@@ -33,12 +38,29 @@ async function PublishDev() {
 		return;
 	}
 	let actpath = actDevpath + config.actname;
+
 	actExist = fse.existsSync(actpath);
-	var copy = function() {
-		return fse.copyFile(config.dist, actpath);
+	var copy = async function() {
+		try {
+			var res = await fse.copy(config.dist, actpath);
+
+			if (!res) {
+				console.log("复制成功");
+				let open = require("open");
+				let acturl;
+				if (config.game != "balls") {
+					acturl = `http://${config.game}.web.ztgame.com/site/act/${config.actname}`;
+				} else {
+					acturl = `http://act.${config.game}.web.ztgame.com/${config.actname}`;
+				}
+				open(acturl);
+			}
+		} catch (error) {
+			console.log(error);
+		}
 	};
 	if (!fse.existsSync(actpath)) {
-		console.log(howlongtime + "活动目录" + actpath + "不存在，是否创建");
+		console.log("活动目录" + actpath + "不存在，是否创建");
 		let answer = readlineSync.keyInYN();
 		if (answer) {
 			fse.mkdirSync(actpath);
@@ -55,7 +77,6 @@ async function PublishDev() {
 			let answer = readlineSync.keyInYN();
 			if (answer) {
 				await copy();
-				console.log("已复制到" + actpath);
 				return true;
 			} else {
 				return false;

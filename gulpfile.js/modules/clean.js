@@ -1,7 +1,6 @@
-const Config = require("../config");
-const { src, dest } = require("gulp");
-const fse = require('fs-extra');
+const config = require("../config");
+const fse = require("fs-extra");
 async function Clean() {
-    await fse.emptyDir(Config.dist);
+	await fse.emptyDir(config.dist);
 }
 module.exports = Clean;
