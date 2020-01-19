@@ -22,7 +22,9 @@ module.exports = {
 		}
 		bs.init({
 			server: "./dist",
-			middleware: proxyArr
+			middleware: proxyArr,
+			host: "local.ztgame.com",
+			open: "external"
 		});
 	}
 };

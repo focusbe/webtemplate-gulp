@@ -1,4 +1,4 @@
-const { gulpwatch } = require("gulp");
+const gulpwatch = require("gulp").watch;
 const config = require("../config");
 const script = require("./script");
 const css = require("./css");

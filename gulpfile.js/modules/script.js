@@ -26,6 +26,24 @@ async function script() {
 			//此处babel的各配置项格式与.babelrc文件相同
 			presets: [
 				"@babel/preset-env" //转换es6代码
+			],
+			plugins: [
+				[
+					"@babel/plugin-transform-runtime",
+					{
+						absoluteRuntime: false,
+						corejs: false,
+						helpers: true,
+						regenerator: true,
+						useESModules: false
+					}
+				],
+				[
+					"@babel/plugin-transform-block-scoping",
+					{
+						throwIfClosureRequired: true
+					}
+				]
 			]
 		})
 		.bundle() //合并打包

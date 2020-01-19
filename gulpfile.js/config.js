@@ -2,7 +2,6 @@ const fse = require("fs-extra");
 const path = require("path");
 var configfile = path.resolve(__dirname, "../config.json");
 var isexit = fse.existsSync(configfile);
-const inquirer = require("inquirer");
 var defaultConfig = {
 	src: "src/",
 	dist: "dist/",

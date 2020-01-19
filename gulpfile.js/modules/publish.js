@@ -62,6 +62,7 @@ async function PublishDev() {
 	if (!fse.existsSync(actpath)) {
 		console.log("活动目录" + actpath + "不存在，是否创建");
 		let answer = readlineSync.keyInYN();
+		
 		if (answer) {
 			fse.mkdirSync(actpath);
 			await copy();
