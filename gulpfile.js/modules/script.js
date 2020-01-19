@@ -28,7 +28,7 @@ async function script() {
 				"@babel/preset-env" //转换es6代码
 			],
 			plugins: [
-				
+				"@babel/plugin-transform-object-assign",
 			]
 		})
 		.bundle() //合并打包
