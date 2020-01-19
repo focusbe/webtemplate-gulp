@@ -11,7 +11,8 @@ const ztgame = require("./modules/ztgame");
 // console.log(Config.game);
 function setTasks() {
 	task("pubdev", publish);
+	task("build", series(clean, html, css, images, script));
 	task("dev", series(ztgame, clean, html, css, images, script, Watch, server));
 }
 setTasks();
-exports.default = function() {};
+exports.default = function () { };
