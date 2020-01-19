@@ -5,7 +5,6 @@ const serverList = ["common", "w1", "w2"];
 const readlineSync = require("readline-sync");
 const howLong = require("../libs/howlong");
 async function PublishDev() {
-	console.log(config);
 	if (!config.game || !config.actname) {
 		console.log("请配置config.json 中的game和actname");
 		return;

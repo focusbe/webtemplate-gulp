@@ -8,7 +8,8 @@
 		"dev": "gulp dev",
 		"build": "gulp build",
 		"pubdev": "gulp pubdev",
-		"publishdev": "gulp pubdev"
+		"publishdev": "gulp pubdev",
+		"cdn": "gulp cdn"
 	},
 	"keywords": [
 		"giant",
