@@ -1,7 +1,7 @@
 const config = require("../config");
 const { src, dest, watch } = require("gulp");
 const htmlmin = require("gulp-htmlmin");
-const version = require("./version");
+
 const replace = require("gulp-replace");
 const reload = require("./server").reload;
 async function html() {
@@ -12,18 +12,30 @@ async function html() {
 			})
 		)
 		.pipe(
-			replace(/(src|href)=('|")(\S+)('|")/gi, function(...param) {
-				// param.splice(param.length - 2, 2);
-				// param.splice(0, 1);
-				if(param[2]=="./js/main.js"||param[2]=="./js/main.ts"){
-					param[2]=="./js/bundle.js";
-				}
-				if (param[1] == "href" && param[2].indexOf(".css") == -1) {
+			replace(/(src|href)=('|")(\S+)('|")/gi, function (...param) {
+				if (param[1] == "href" && param[3].indexOf(".") == -1) {
+
 					return param[0];
 				}
+				let realurl = param[3];
+				let version = new Date().getTime();
+				if (realurl == "./js/main.js" || realurl == "./js/main.ts") {
+					realurl = "./js/bundle.js";
+				}
+				else {
+					let cssfiles = ['.sass', '.scss', '.less', '.styl', '.stylus', '.sass']
+					for (var i in cssfiles) {
+
+						if (realurl.indexOf(cssfiles[i]) > -1) {
+							realurl = realurl.replace(cssfiles[i], '.css');
+							break;
+						}
+					}
+				}
+
 				let imgurl = param[0];
-				if (param[2].indexOf("?") == -1) {
-					imgurl = imgurl.replace(param[3], param[3] + "?v=" + version);
+				if (param[3].indexOf("?") == -1) {
+					imgurl = imgurl.replace(param[3], realurl + "?v=" + version);
 				}
 
 				return imgurl;

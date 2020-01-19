@@ -5,7 +5,7 @@ const less = require("gulp-less");
 const sass = require("gulp-sass");
 const gulpif = require("gulp-if");
 const stylus = require("gulp-stylus");
-const version = require("./version");
+
 const merge = require("merge-stream");
 const reload = require("./server").reload;
 const replace = require("gulp-replace");
@@ -14,6 +14,7 @@ async function css() {
 		return replace(/url\((\S+)\)/gi, function(...param) {
 			// param.splice(param.length - 2, 2);
 			// param.splice(0, 1);
+			let version = new Date().getTime();
 			if (!!param[1] && param[1].indexOf("?") == -1) {
 				param[0] = param[0].replace(param[1], param[1] + "?v=" + version);
 			}
