@@ -20,7 +20,7 @@ function images(cb2) {
 	let total = 0;
 	let loaded = 0;
 	src(`${config.src}**/*.{png,jpg,gif,ico,svg}`).pipe(
-		through.obj(function(file, enc, cb) {
+		through.obj(function (file, enc, cb) {
 			// console.log(enc);
 			cb();
 			total++;
@@ -28,6 +28,7 @@ function images(cb2) {
 			function checkLoaded() {
 				function isEnd() {
 					loaded++;
+					console.log(loaded);
 					//process.stdout.write("#", "utf-8");
 					if (loaded >= total) {
 						cb2();
@@ -73,5 +74,10 @@ function images(cb2) {
 			}
 		})
 	);
+	setTimeout(function () {
+		if (total == 0) {
+			cb2();
+		}
+	}, 1000);
 }
 module.exports = images;

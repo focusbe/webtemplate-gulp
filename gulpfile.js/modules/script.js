@@ -28,22 +28,7 @@ async function script() {
 				"@babel/preset-env" //转换es6代码
 			],
 			plugins: [
-				[
-					"@babel/plugin-transform-runtime",
-					{
-						absoluteRuntime: false,
-						corejs: false,
-						helpers: true,
-						regenerator: true,
-						useESModules: false
-					}
-				],
-				[
-					"@babel/plugin-transform-block-scoping",
-					{
-						throwIfClosureRequired: true
-					}
-				]
+				
 			]
 		})
 		.bundle() //合并打包

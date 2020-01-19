@@ -15,6 +15,9 @@ async function html() {
 			replace(/(src|href)=('|")(\S+)('|")/gi, function(...param) {
 				// param.splice(param.length - 2, 2);
 				// param.splice(0, 1);
+				if(param[2]=="./js/main.js"||param[2]=="./js/main.ts"){
+					param[2]=="./js/bundle.js";
+				}
 				if (param[1] == "href" && param[2].indexOf(".css") == -1) {
 					return param[0];
 				}
