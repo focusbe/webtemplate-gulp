@@ -10,7 +10,7 @@ const source = require("vinyl-source-stream");
 const reload = require("./server").reload;
 //console.log(browserSync);
 // browserSync.reload();
-var DEBUG = argv._ == 'dev';
+var DEBUG = argv._ == "dev";
 async function script() {
 	//以 js/main.js 或 js/main.ts为入口打包 js文件
 	let entry = config.src + "/js/main.ts";
@@ -29,7 +29,12 @@ async function script() {
 				"@babel/preset-env" //转换es6代码
 			],
 			plugins: [
-				"@babel/plugin-transform-object-assign",
+				[
+					"@babel/plugin-transform-runtime",
+					{
+						corejs: 2
+					}
+				]
 			]
 		})
 		.bundle() //合并打包
