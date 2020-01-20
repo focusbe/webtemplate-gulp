@@ -15,22 +15,21 @@ const adapter = new FileSync(path.resolve(__dirname, "../cache/db.json"));
 const db = low(adapter);
 db.defaults({ images: [] }).write();
 const reload = require("./server").reload;
-const readline = require("readline");
+// const readline = require("readline");
 function images(cb2) {
 	let total = 0;
 	let loaded = 0;
 	src(`${config.src}**/*.{png,jpg,gif,ico,svg}`).pipe(
 		through.obj(function (file, enc, cb) {
-			// console.log(enc);
 			cb();
 			total++;
 			let outPath = path.resolve(file.base, "../", config.dist, file.relative);
 			function checkLoaded() {
 				function isEnd() {
 					loaded++;
-				
 					//process.stdout.write("#", "utf-8");
 					if (loaded >= total) {
+						reload();
 						cb2();
 					}
 				}

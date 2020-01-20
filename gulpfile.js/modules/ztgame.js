@@ -2,7 +2,7 @@ const os = require("os");
 var host = os.platform == "win32" ? "C:/Windows/System32/drivers/etc/hosts" : "/etc/hosts";
 const fse = require("fs-extra");
 async function ztgame(cb) {
-	console.log("为了方便测试");
+	console.log("为了方便测试,添加 host local.ztgame.com");
 	var res = await fse.readFile(host, "utf8", (err, res) => {
 		if (!err) {
 			if (res.indexOf("local.ztgame.com") == -1) {

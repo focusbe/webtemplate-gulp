@@ -1,1 +1,3 @@
-
+requirejs(["jquery"], function($) {
+    
+});

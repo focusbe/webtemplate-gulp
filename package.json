@@ -29,6 +29,7 @@
 		"babelify": "^10.0.0",
 		"browser-sync": "^2.26.7",
 		"browserify": "^16.5.0",
+		"es6-promise": "^4.2.8",
 		"fs-extra": "^8.1.0",
 		"gulp": "^4.0.2",
 		"gulp-htmlmin": "^5.0.1",
@@ -55,7 +56,5 @@
 		"foliou": "^1.0.30",
 		"jquery": "1"
 	},
-	"browserslist": [
-		"ie >= 8"
-	]
+	"browserslist": "ie >= 8"
 }

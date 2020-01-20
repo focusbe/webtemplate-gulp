@@ -11,10 +11,10 @@ const reload = require("./server").reload;
 //console.log(browserSync);
 // browserSync.reload();
 var DEBUG = argv._ == "dev";
-async function script() {
+function script() {
 	//以 js/main.js 或 js/main.ts为入口打包 js文件
 	let entry = config.src + "/js/main.ts";
-	let stat = await fse.exists(entry);
+	let stat = fse.existsSync(entry);
 	if (!stat) {
 		entry = config.src + "/js/main.js";
 	}
