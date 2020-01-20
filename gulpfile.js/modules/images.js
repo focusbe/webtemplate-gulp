@@ -28,7 +28,7 @@ function images(cb2) {
 			function checkLoaded() {
 				function isEnd() {
 					loaded++;
-					console.log(loaded);
+				
 					//process.stdout.write("#", "utf-8");
 					if (loaded >= total) {
 						cb2();
