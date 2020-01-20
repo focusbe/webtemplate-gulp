@@ -5,7 +5,7 @@ const less = require("gulp-less");
 const sass = require("gulp-sass");
 const gulpif = require("gulp-if");
 const stylus = require("gulp-stylus");
-
+const autoprefixer = require("gulp-autoprefixer");
 const merge = require("merge-stream");
 const reload = require("./server").reload;
 const replace = require("gulp-replace");
@@ -32,11 +32,21 @@ async function css() {
 			)
 		)
 		.pipe(imgreplace())
+		.pipe(
+			autoprefixer({
+				cascade: true
+			})
+		)
 		.pipe(dest(config.dist))
 		.pipe(reload({ stream: true }));
 	var stylusTask = src([`${config.src}**/*.{styl,stylus}`, `!${config.src}lib/**/*.{styl,stylus}`])
 		.pipe(stylus())
 		.pipe(imgreplace())
+		.pipe(
+			autoprefixer({
+				cascade: true
+			})
+		)
 		.pipe(dest(config.dist))
 		.pipe(reload({ stream: true }));
 	return merge(scssTask, stylusTask);
