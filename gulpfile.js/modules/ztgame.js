@@ -12,6 +12,9 @@ async function ztgame(cb) {
 						console.log("写成功");
 						cb();
 					}
+					else{
+						console.log(err);
+					}
 				});
 			} else {
 				console.log("已设置本地host");

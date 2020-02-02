@@ -1,3 +1,2 @@
-requirejs(["jquery"], function($) {
-    
-});
+import B from "./b";
+B();
