@@ -21,7 +21,7 @@ async function css() {
 			return param[0];
 		});
 	};
-	var scssTask = src([`${config.src}**/*.{less}`, `!${config.src}libs/**/*.{less}`])
+	var scssTask = src([`${config.src}**/*.less`, `!${config.src}libs/**/*.less`])
 		.pipe(
 			less()
 		)
