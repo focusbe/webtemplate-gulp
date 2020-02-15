@@ -4,7 +4,7 @@
 	"description": "gulp template for giant web front developer",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"test": "gulp test",
 		"dev": "gulp dev",
 		"build": "gulp build",
 		"pubdev": "gulp pubdev",
@@ -25,7 +25,6 @@
 		"@babel/runtime": "^7.8.3",
 		"@babel/runtime-corejs2": "^7.8.3",
 		"@babel/runtime-corejs3": "^7.8.3",
-		"@types/node": "^12.11.1",
 		"babelify": "^10.0.0",
 		"browser-sync": "^2.26.7",
 		"browserify": "^16.5.0",
@@ -33,7 +32,6 @@
 		"gulp": "^4.0.2",
 		"gulp-autoprefixer": "^7.0.1",
 		"gulp-htmlmin": "^5.0.1",
-		"gulp-if": "^3.0.0",
 		"gulp-less": "^4.0.1",
 		"gulp-replace": "^1.0.0",
 		"gulp-stylus": "^2.7.0",
@@ -48,6 +46,7 @@
 		"tsify": "^4.0.1",
 		"typescript": "^3.7.5",
 		"vinyl-source-stream": "^2.0.0",
+		"watchify": "^3.11.1",
 		"yargs": "^14.2.0"
 	},
 	"dependencies": {

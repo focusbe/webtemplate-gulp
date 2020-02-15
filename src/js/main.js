@@ -1,2 +1,2 @@
-import B from "./b";
-B();
+var Animate = require("foliou/animate");
+console.log(Animate);

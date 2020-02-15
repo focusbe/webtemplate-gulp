@@ -2,32 +2,44 @@
 const config = require("../config");
 const { dest } = require("gulp");
 const browserify = require("browserify");
-const fse = require("fs-extra");
+const fs = require("fs-extra");
 const argv = require("yargs").argv;
 const babelify = require("babelify");
 const tsify = require("tsify");
 const source = require("vinyl-source-stream");
 const reload = require("./server").reload;
+const path = require("path");
+const merge = require("merge-stream");
 //console.log(browserSync);
 // browserSync.reload();
 var DEBUG = argv._ == "dev";
-async function script() {
-	//以 js/main.js 或 js/main.ts为入口打包 js文件
-	// let entry = config.src + "/js/main.ts";
-	// let stat = fse.existsSync(entry);
-	// if (!stat) {
-	// 	entry = config.src + "/js/main.js";
-	// }
+function script(cb) {
 	var entries = global.entries;
-
-	entries.map((entry) => {
+	var tasks = [];
+	if(entries.length==0){
+		cb();
+		return;
+	}
+	entries.map((entry, key) => {
+		let entryAllPath = config.src + entry;
+		let extname = path.extname(entry);
 		let filename = entry.split('/');
 		filename = filename[filename.length - 1];
-		browserify({
-			entries: config.src + entry,
-			debug: DEBUG
-		})
-			.plugin(tsify) //添加对typescript的支持
+		filename = filename.split('.')[0] + '.js';
+		var curTask = browserify({
+			entries: entryAllPath,
+			debug: DEBUG,
+			cache: {},
+			packageCache: {}
+		});
+		if (extname == ".ts") {
+			curTask = curTask.plugin(tsify)
+			.on('file', function (file, id, parent) {
+				var filename = path.basename(file);
+				console.log("TypeScript:正在加载" + filename);
+			})
+		}
+		curTask = curTask
 			.transform(babelify, {
 				//此处babel的各配置项格式与.babelrc文件相同
 				presets: [
@@ -42,11 +54,19 @@ async function script() {
 					]
 				]
 			})
+			.on('bundle', function (bundle) {
+				//console.log(bundle);
+			})
 			.bundle() //合并打包
+			.on('error', function (error) { console.error(error.toString()); })
 			.pipe(source(filename))
-			.pipe(dest(config.dist + "js/"))
+			.pipe(dest(config.dist + path.dirname(entry.replace(config.src, ''))))
 			.pipe(reload({ stream: true }));
+			console.log(tasks);
+		tasks.push(curTask);
 	});
+	//console.log(tasks);
+	return merge(...tasks);
 }
 
 module.exports = script;
