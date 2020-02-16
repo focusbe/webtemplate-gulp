@@ -17,7 +17,7 @@ var defaultConfig = {
 	mobileDir: ["m", "mobile", "pc"]
 };
 if (!isexit) {
-	fse.writeJsonSync(configfile, defaultConfig);
+	fse.writeJsonSync(configfile, defaultConfig,{spaces:4});
 }
 var Config = fse.readJsonSync(configfile);
 if (!Config) {
