@@ -4,6 +4,7 @@
 	"description": "gulp template for giant web front developer",
 	"main": "index.js",
 	"scripts": {
+		"clean":"gulp clean",
 		"test": "gulp test",
 		"dev": "gulp dev",
 		"build": "gulp build",
@@ -51,6 +52,7 @@
 	},
 	"dependencies": {
 		"foliou": "^1.0.30",
+		"gulp-clean-css": "^4.2.0",
 		"jquery": "1"
 	},
 	"browserslist": "last 3 versions,ie >= 8"

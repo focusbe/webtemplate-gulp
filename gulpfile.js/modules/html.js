@@ -30,22 +30,13 @@ function html() {
 				let filePath = path.join(curHtmlDir, sourceUrl).replace(/\\/g, "/");
 				filePath = Util.getEntry(filePath);
 				filePath = Util.getStyles(filePath);
+				sourceUrl = Util.toVersionUrl(sourceUrl);
 				sourceUrl = Util.addVersion(sourceUrl);
 				return param[0].replace(param[3], sourceUrl);
 			})
 		)
 		.pipe(dest(config.dist))
 		.pipe(reload({ stream: true }));
-	// if (!Cache.isSame('entries', global.entries, true)) {
-	// 	console.log(global.entries);
-	// 	tasks.push(script());
-
-	// }
-	// if (!Cache.isSame('cssFiles', global.cssFiles, true)) {
-	// 	console.log(global.cssFiles);
-	// 	tasks.push(css());
-	// }
-	//tasks.splice(0, 0, htmltask);
 	return htmltask;
 }
 module.exports = html;

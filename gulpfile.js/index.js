@@ -10,7 +10,7 @@ var copyglob = [`${config.src}**/*.*`];
 var pkgglob = `!${config.src}**/*.{`;
 for (var i in global.pkgFiles) {
 	for (var j in global.pkgFiles[i]) {
-		if(global.pkgFiles[i][j]=='.js'){
+		if (global.pkgFiles[i][j] == '.js') {
 			continue;
 		}
 		pkgglob += global.pkgFiles[i][j].replace('.', '') + ',';
@@ -31,10 +31,9 @@ const Watch = require("./modules/watch");
 const server = require("./modules/server").start;
 const clearcdn = require("./modules/clearcdn");
 const copy = require("./modules/copy");
-const test = require("./modules/test");
-const test2 = require("./modules/test2");
+const cleanCache = require("./modules/clean-cache");
 function setTasks() {
-	task("test", series(test2, test));
+	task("clean", cleanCache);
 	task("pubdev", publish);
 	task("cdn", clearcdn)
 	task("build", series(clean, html, css, script, images, copy));

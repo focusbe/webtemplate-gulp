@@ -8,6 +8,7 @@ const path = require("path");
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
 const cachePath = path.resolve(__dirname, "../cache");
+const Utli = require("../libs/util");
 if (!fse.existsSync(cachePath)) {
 	fse.mkdirSync(cachePath);
 }
@@ -23,11 +24,10 @@ function images(cb2) {
 		through.obj(function (file, enc, cb) {
 			cb();
 			total++;
-			let outPath = path.resolve(file.base, "../", config.dist, file.relative);
+			let outPath = path.resolve(file.base, "../", config.dist, path.dirname(Utli.toVersionUrl(file.relative)), path.basename(file.relative));
 			function checkLoaded() {
 				function isEnd() {
 					loaded++;
-					//process.stdout.write("#", "utf-8");
 					if (loaded >= total) {
 						reload();
 						cb2();

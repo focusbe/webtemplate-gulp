@@ -9,7 +9,5 @@ async function Clean() {
 		console.log('清空目录失败');
 		return false;
 	}
-
-
 }
 module.exports = Clean;

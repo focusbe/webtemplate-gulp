@@ -10,15 +10,17 @@ const source = require("vinyl-source-stream");
 const reload = require("./server").reload;
 const path = require("path");
 const merge = require("merge-stream");
+const Utli = require("../libs/util");
 //console.log(browserSync);
 // browserSync.reload();
 var DEBUG = argv._ == "dev";
-function script(cb) {
+function script() {
 	var entries = global.entries;
 	var tasks = [];
-	if(entries.length==0){
-		cb();
-		return;
+	//console.log(entries);
+	if (entries.length == 0) {
+		// cb();
+		return false;
 	}
 	entries.map((entry, key) => {
 		let entryAllPath = config.src + entry;
@@ -34,10 +36,10 @@ function script(cb) {
 		});
 		if (extname == ".ts") {
 			curTask = curTask.plugin(tsify)
-			.on('file', function (file, id, parent) {
-				var filename = path.basename(file);
-				console.log("TypeScript:正在加载" + filename);
-			})
+				.on('file', function (file, id, parent) {
+					var filename = path.basename(file);
+					//console.log("TypeScript:正在加载" + filename);
+				})
 		}
 		curTask = curTask
 			.transform(babelify, {
@@ -60,9 +62,9 @@ function script(cb) {
 			.bundle() //合并打包
 			.on('error', function (error) { console.error(error.toString()); })
 			.pipe(source(filename))
-			.pipe(dest(config.dist + path.dirname(entry.replace(config.src, ''))))
+			.pipe(dest(config.dist + Utli.toVersionUrl(path.dirname(entry.replace(config.src, '')))))
 			.pipe(reload({ stream: true }));
-			console.log(tasks);
+		//console.log(tasks);
 		tasks.push(curTask);
 	});
 	//console.log(tasks);

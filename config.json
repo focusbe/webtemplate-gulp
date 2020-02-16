@@ -1,6 +1,16 @@
 {
     "src": "src/",
     "dist": "dist/",
-    "proxy": [],
-    "version":""
+    "proxy": [
+        {
+            "path": "",
+            "target": ""
+        }
+    ],
+    "version": "",
+    "mobileDir": [
+        "m",
+        "mobile",
+        "pc"
+    ]
 }

@@ -48,6 +48,14 @@ module.exports = {
 				changeOrigin: true
 			};
 			proxyArr.push(proxy(["*.php", "api/**"], proxyOptions));
+			for (var i in config.proxy) {
+				if (!config.proxy[i]['path'] || config.proxy[i]['target']) {
+					return;
+				}
+				proxyArr.push(proxy(config.proxy[i]['path'], {
+					target: config.proxy[i]['target']
+				}));
+			}
 		}
 		bs.init({
 			server: "./dist",

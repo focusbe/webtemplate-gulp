@@ -29,20 +29,12 @@ var Util = {
             return filePath;
         }
         var allPath = config.src + filePath;
-        if (extname == '.js') {
-            var isentry = Util.isEntrySync(allPath);
-            if (isentry) {
-                global.entries.push(filePath);
-            }
-        }
-        else {
-            global.entries.push(filePath);
-            filePath = filePath.replace(extname, '.js');
-        }
+
+        global.entries.push(filePath);
+        filePath = filePath.replace(extname, '.js');
         return filePath;
     },
     getStyles: function (filePath) {
-        console.log(filePath);
         var cssExts = global.pkgFiles['css'];
         let extname = path.extname(filePath);
         if (cssExts.indexOf(extname) == -1) {
@@ -66,6 +58,26 @@ var Util = {
             sourceUrl = sourceUrl + "?v=" + version;
         }
         return sourceUrl;
+    },
+    toVersionUrl: function (url) {
+        if (!config.version) {
+            return url;
+        }
+        var urlArr = url.split('/');
+        var dirname = '';
+        if (urlArr[0].indexOf('.') > -1) {
+            dirname = urlArr.splice(0, 1) + '/';
+
+            url = urlArr.join('/');
+        }
+        var mobileStr = config.mobileDir.join('|');
+        var regStr = '^(?:(?:(?:' + mobileStr + ')\/)?(images|css|js))(\/\\S*)?$';
+        var urlReg = new RegExp(regStr);
+        var matchs = url.match(urlReg);
+        if (!!matchs && !!matchs[1]) {
+            url = url.replace(matchs[1], matchs[1] + '/' + config.version);
+        }
+        return dirname + url;
     }
 }
 module.exports = Util;

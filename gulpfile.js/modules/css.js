@@ -8,6 +8,8 @@ const reload = require("./server").reload;
 const replace = require("gulp-replace");
 const path = require("path");
 const fs = require("fs-extra");
+const cleanCSS = require('gulp-clean-css');
+const Utli = require("../libs/util");
 function css() {
 	let imgreplace = function () {
 		return replace(/url\((\S+?)\)/gi, function (...param) {
@@ -41,7 +43,8 @@ function css() {
 					cascade: true
 				})
 			)
-			.pipe(dest(config.dist + dirname))
+			.pipe(cleanCSS({ compatibility: 'ie8' }))
+			.pipe(dest(config.dist + Utli.toVersionUrl(dirname)))
 			.pipe(reload({ stream: true }));
 	}
 	return merge(...cssTasks);
