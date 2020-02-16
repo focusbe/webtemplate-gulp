@@ -11,6 +11,9 @@ const reload = require("./server").reload;
 const path = require("path");
 const merge = require("merge-stream");
 const Utli = require("../libs/util");
+var uglify = require('gulp-uglify');
+var buffer = require('vinyl-buffer');
+var gulpif = require('gulp-if');
 //console.log(browserSync);
 // browserSync.reload();
 var DEBUG = argv._ == "dev";
@@ -61,7 +64,10 @@ function script() {
 			})
 			.bundle() //合并打包
 			.on('error', function (error) { console.error(error.toString()); })
+
 			.pipe(source(filename))
+			.pipe(buffer())
+			.pipe(gulpif(!DEBUG, uglify()))
 			.pipe(dest(config.dist + Utli.toVersionUrl(path.dirname(entry.replace(config.src, '')))))
 			.pipe(reload({ stream: true }));
 		//console.log(tasks);
