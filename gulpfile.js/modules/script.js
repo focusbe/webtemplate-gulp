@@ -21,10 +21,7 @@ function script(cb) {
 	var entries = global.entries;
 	var tasks = [];
 	//console.log(entries);
-	if (entries.length == 0) {
-		// cb();
-		return false;
-	}
+
 	entries.map((entry, key) => {
 		let entryAllPath = config.src + entry;
 		if (!fs.existsSync(entryAllPath)) {
@@ -77,6 +74,7 @@ function script(cb) {
 		tasks.push(curTask);
 	});
 	//console.log(tasks);
+	// console.log(tasks);
 	if (tasks.length == 0) {
 		//console.log('空');
 		cb();

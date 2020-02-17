@@ -17,6 +17,8 @@ const db = low(adapter);
 db.defaults({ images: [] }).write();
 const reload = require("./server").reload;
 // const readline = require("readline");
+const ProgressBar = require("../libs/progress");
+var progressBar = new ProgressBar();
 function images(cb2) {
 	let total = 0;
 	let loaded = 0;
@@ -28,6 +30,12 @@ function images(cb2) {
 			function checkLoaded() {
 				function isEnd() {
 					loaded++;
+					progressBar.render({
+						description: "图片压缩",
+						completed: loaded,
+						total: total
+					});
+					// console.log(parseInt(loaded / total * 100));
 					if (loaded >= total) {
 						reload();
 						cb2();

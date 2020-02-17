@@ -20,6 +20,7 @@ function css(cb) {
 			return param[0];
 		});
 	};
+	
 	let cssTasks = [];
 	for (var i in global.cssFiles) {
 		let cssFile = `${config.src}${global.cssFiles[i]}`;
