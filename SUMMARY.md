@@ -1,5 +1,5 @@
 # Table of contents
 
-* [Initial page](README.md)
-* [特性](feature.md)
+* [安装](README.md)
+* [使用说明](useage.md)
 
