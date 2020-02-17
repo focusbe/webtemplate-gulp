@@ -1,4 +1,4 @@
-# 安装
+# 初始化
 
 webtemplate-gulp 是一个以gulp为基础搭建的前端开发的模版，包含了以下功能：
 
@@ -51,5 +51,13 @@ myproject 替换为项目的目录名
 }
 ```
 
+## 命令
 
+```javascript
+npm run dev //运行本地测试
+npm run build //构建正式发布的代码
+npm run pubdev //发布代码到测试环境
+npm run cdn //清cdn缓存
+npm run clean //清空打包时用到的缓存
+```
 
