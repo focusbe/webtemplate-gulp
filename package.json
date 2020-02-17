@@ -4,6 +4,7 @@
 	"description": "gulp template for giant web front developer",
 	"main": "index.js",
 	"scripts": {
+		"reset": "node ./gulpfile.js/reset.js",
 		"clean": "gulp clean",
 		"test": "gulp test",
 		"dev": "gulp dev",
@@ -29,6 +30,7 @@
 		"babelify": "^10.0.0",
 		"browser-sync": "^2.26.7",
 		"browserify": "^16.5.0",
+		"download-git-repo": "^3.0.2",
 		"fs-extra": "^8.1.0",
 		"gulp": "^4.0.2",
 		"gulp-autoprefixer": "^7.0.1",
