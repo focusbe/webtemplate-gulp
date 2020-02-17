@@ -11,7 +11,7 @@
 		"build": "gulp build",
 		"pubdev": "gulp pubdev",
 		"publishdev": "gulp pubdev",
-		"cdn": "gulp cdn"
+		"cleancdn": "gulp cdn"
 	},
 	"keywords": [
 		"giant",
