@@ -5,16 +5,8 @@ var isexit = fse.existsSync(configfile);
 var defaultConfig = {
 	src: "src/",
 	dist: "dist/",
-	proxy: [
-        {
-            "path": "",
-            "target": ""
-        }
-    ],
 	game: "",
-	actname: "",
-	version: "",
-	mobileDir: ["m", "mobile", "pc"]
+	actname: ""
 };
 if (!isexit) {
 	fse.writeJsonSync(configfile, defaultConfig,{spaces:4});

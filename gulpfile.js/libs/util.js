@@ -70,7 +70,14 @@ var Util = {
 
             url = urlArr.join('/');
         }
-        var mobileStr = config.mobileDir.join('|');
+        var mobileDir;
+        if (!!config.mobileDir) {
+            mobileDir = config.mobileDir;
+        }
+        else {
+            mobileDir = ['m', 'mobile'];
+        }
+        var mobileStr = mobileDir.join('|');
         var regStr = '^(?:(?:(?:' + mobileStr + ')\/)?(images|css|js))(\/\\S*)?$';
         var urlReg = new RegExp(regStr);
         var matchs = url.match(urlReg);

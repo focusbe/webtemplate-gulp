@@ -64,7 +64,6 @@ function script(cb) {
 			})
 			.bundle() //合并打包
 			.on('error', function (error) { console.error(error.toString()); })
-
 			.pipe(source(filename))
 			.pipe(buffer())
 			.pipe(gulpif(!DEBUG, uglify()))
