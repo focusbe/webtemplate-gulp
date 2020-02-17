@@ -17,7 +17,7 @@ var gulpif = require('gulp-if');
 //console.log(browserSync);
 // browserSync.reload();
 var DEBUG = argv._ == "dev";
-function script() {
+function script(cb) {
 	var entries = global.entries;
 	var tasks = [];
 	//console.log(entries);
@@ -27,6 +27,9 @@ function script() {
 	}
 	entries.map((entry, key) => {
 		let entryAllPath = config.src + entry;
+		if (!fs.existsSync(entryAllPath)) {
+			return true;
+		}
 		let extname = path.extname(entry);
 		let filename = entry.split('/');
 		filename = filename[filename.length - 1];
@@ -74,6 +77,11 @@ function script() {
 		tasks.push(curTask);
 	});
 	//console.log(tasks);
+	if (tasks.length == 0) {
+		//console.log('空');
+		cb();
+		return false;
+	}
 	return merge(...tasks);
 }
 

@@ -10,7 +10,7 @@ const path = require("path");
 const fs = require("fs-extra");
 const cleanCSS = require('gulp-clean-css');
 const Utli = require("../libs/util");
-function css() {
+function css(cb) {
 	let imgreplace = function () {
 		return replace(/url\((\S+?)\)/gi, function (...param) {
 			let version = new Date().getTime();
@@ -46,6 +46,10 @@ function css() {
 			.pipe(cleanCSS({ compatibility: 'ie8' }))
 			.pipe(dest(config.dist + Utli.toVersionUrl(dirname)))
 			.pipe(reload({ stream: true }));
+	}
+	if (cssTasks.length == 0) {
+		cb();
+		return false;
 	}
 	return merge(...cssTasks);
 }
