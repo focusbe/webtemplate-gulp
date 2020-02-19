@@ -9,16 +9,19 @@ var Util = {
         return true;
     },
     isEntrySync: function (file) {
+        // console.log(file);
         try {
             let content = fs.readFileSync(file, 'utf8');
+            // console.log(content);
             if (!!content) {
                 let requireReg = new RegExp(/(=\s?require\()|(import\s+(.+?)\s+from\s+(.+))/igs);
                 var res = content.search(requireReg);
+                // console.log(res);
                 return res > -1;
             }
             return false;
         } catch (error) {
-            // console.log(error);
+            console.log(error);
             return false;
         }
     },
