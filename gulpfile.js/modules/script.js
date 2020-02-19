@@ -24,7 +24,9 @@ function script(cb) {
 
 	entries.map((entry, key) => {
 		let entryAllPath = config.src + entry;
-		if (!fs.existsSync(entryAllPath)) {
+		// console.log(entryAllPath);
+		// console.log(fs.existsSync(entryAllPath));
+		if (!Utli.isEntrySync(entryAllPath)) {
 			return true;
 		}
 		let extname = path.extname(entry);
