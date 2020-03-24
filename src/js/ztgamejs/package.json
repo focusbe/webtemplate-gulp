@@ -9,7 +9,7 @@
   "author": "liupeng",
   "license": "ISC",
   "dependencies": {
-    "jquery": "1",
+    "jquery": "3",
     "style-inject": "^0.3.0"
   },
   "gitHead": "b3bb00cbd9bddc53a4a51a201b82c6797b60c151",
