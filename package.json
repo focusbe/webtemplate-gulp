@@ -1,7 +1,7 @@
 {
-	"name": "gulp_template_v3",
+	"name": "gulp-template-v2",
 	"version": "0.0.1",
-	"description": "gulp template for giant web front developer",
+	"description": "the template for web front developer",
 	"main": "index.js",
 	"scripts": {
 		"reset": "node ./gulpfile.js/reset.js",
@@ -27,13 +27,9 @@
 		"@babel/preset-env": "^7.8.3",
 		"@babel/runtime": "^7.8.3",
 		"@babel/runtime-corejs2": "^7.8.3",
-		"@babel/runtime-corejs3": "^7.8.3",
-		"babel-plugin-module-resolver": "^4.0.0",
-		"babel-plugin-resolver": "^1.1.0",
 		"babelify": "^10.0.0",
 		"browser-sync": "^2.26.7",
 		"browserify": "^16.5.0",
-		"download-git-repo": "^3.0.2",
 		"fs-extra": "^8.1.0",
 		"gulp": "^4.0.2",
 		"gulp-autoprefixer": "^7.0.1",
@@ -49,16 +45,16 @@
 		"open": "^7.0.0",
 		"readline-sync": "^1.4.10",
 		"single-line-log": "^1.1.2",
-		"style-inject": "^0.3.0",
 		"through2": "^3.0.1",
 		"tinypngjs": "^1.0.5",
 		"vinyl-buffer": "^1.0.1",
 		"vinyl-source-stream": "^2.0.0",
-		"yargs": "^14.2.0"
-	},
-	"dependencies": {
+		"yargs": "^14.2.0",
 		"gulp-clean-css": "^4.2.0",
 		"jquery": "1"
+	},
+	"dependencies": {
+		
 	},
 	"browserslist": "last 3 versions,ie >= 8"
 }

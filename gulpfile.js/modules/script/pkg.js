@@ -41,11 +41,11 @@ function pkgEntries(entries) {
 								"@babel/preset-env" //转换es6代码
 							],
 							plugins: [
-								["module-resolver", {
-									"alias": {
-										"ztgamejs": "./ztgamejs"
-									}
-								}],
+								// ["module-resolver", {
+								// 	"alias": {
+								// 		"ztgamejs": "./ztgamejs"
+								// 	}
+								// }],
 								[
 									"@babel/plugin-transform-runtime",
 									{
