@@ -16,7 +16,7 @@ const reload = require("../server").reload;
 const Copy = require("./copy");
 function pkgEntries(entries) {
 	var promiseArr = [];
-	if(typeof(entries)=="string"){
+	if (typeof entries == "string") {
 		entries = [entries];
 	}
 	entries.map(entry => {
@@ -38,7 +38,14 @@ function pkgEntries(entries) {
 						.transform(babelify, {
 							//此处babel的各配置项格式与.babelrc文件相同
 							presets: [
-								"@babel/preset-env" //转换es6代码
+								[
+									"@babel/preset-env", //转换es6代码
+									{
+										targets: {
+											esmodules: true
+										}
+									}
+								]
 							],
 							plugins: [
 								// ["module-resolver", {
@@ -54,10 +61,10 @@ function pkgEntries(entries) {
 								]
 							]
 						})
-						.on("bundle", function (bundle) {
+						.on("bundle", function(bundle) {
 							console.log("打包" + filename);
 						})
-						.on("file", function (filename) {
+						.on("file", function(filename) {
 							let relativePath = path.relative(path.resolve(__dirname, "../../../"), filename);
 							relativePath = Utli.formatPath(relativePath);
 							if (relativePath.indexOf("node_modules/") == -1) {
@@ -67,7 +74,7 @@ function pkgEntries(entries) {
 							}
 						})
 						.bundle() //合并打包
-						.on("error", function (error) {
+						.on("error", function(error) {
 							console.error(error.toString());
 							resolve(false);
 						})
@@ -77,10 +84,9 @@ function pkgEntries(entries) {
 						.pipe(dest(outDir))
 						.pipe(reload({ stream: true }))
 						.pipe(
-							
-							through.obj(function (file, enc, cb) {
-								console.log('打包成功'+outDir+'/',filename);
-								jsState.setInjs(entry,jsFiles);
+							through.obj(function(file, enc, cb) {
+								console.log("打包成功" + outDir + "/", filename);
+								jsState.setInjs(entry, jsFiles);
 								resolve(true);
 								cb();
 							})
@@ -88,7 +94,7 @@ function pkgEntries(entries) {
 				} else {
 					//复制就可以了呀
 					try {
-						jsState.setInjs(entry,jsFiles);
+						jsState.setInjs(entry, jsFiles);
 						Copy(entry);
 						resolve(true);
 					} catch (error) {
