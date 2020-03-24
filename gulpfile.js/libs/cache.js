@@ -4,8 +4,6 @@ var Cache = {
         cache[key] = value;
     },
     isSame(key, value, sync) {
-        // console.log(key);
-        // console.log(cache(key));
         var isSame = cache[key] == value;
         if (!!sync) {
             this.update(key, value);

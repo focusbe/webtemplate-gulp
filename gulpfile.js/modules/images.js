@@ -35,7 +35,7 @@ function images(cb2) {
 						completed: loaded,
 						total: total
 					});
-					// console.log(parseInt(loaded / total * 100));
+				
 					if (loaded >= total) {
 						reload();
 						cb2();
@@ -50,9 +50,10 @@ function images(cb2) {
 					});
 			}
 			var stat = fse.statSync(file.path);
+			var relativePath = file.relative.replace(/\\/g, '/');
 			var compressed = db
 				.get("images")
-				.find({ file: file.path })
+				.find({ file: relativePath })
 				.value();
 			if (!stat || !stat.mtimeMs || !compressed || compressed.mtimeMs != stat.mtimeMs) {
 				tinypng
@@ -60,13 +61,14 @@ function images(cb2) {
 					.then(res => {
 						if (!!res) {
 							stat = fse.statSync(file.path);
+							
 							if (!compressed) {
 								db.get("images")
-									.push({ file: file.path, mtimeMs: stat.mtimeMs || "" })
+									.push({ file: relativePath, mtimeMs: stat.mtimeMs || "" })
 									.write();
 							} else {
 								db.get("images")
-									.find({ file: file.path })
+									.find({ file: relativePath })
 									.assign({ mtimeMs: stat.mtimeMs || "" })
 									.write();
 							}

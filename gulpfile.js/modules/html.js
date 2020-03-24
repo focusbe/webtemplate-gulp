@@ -5,15 +5,10 @@ const path = require("path");
 const replace = require("gulp-replace");
 const reload = require("./server").reload;
 const Util = require("../libs/util.js");
-const css = require("./css");
-const script = require("./script");
-const Cache = require("../libs/cache");
-const { series, task } = require("gulp");
-const merge = require("merge-stream");
+const jsState = require("./script/state");
 function html() {
 	global.entries = [];
 	global.cssFiles = [];
-	var tasks = [];
 	let htmltask = src(`${config.src}**/*.{html,shtml}`)
 		.pipe(
 			htmlmin({
@@ -21,14 +16,19 @@ function html() {
 			})
 		)
 		.pipe(
-			replace(/<([^\s'"<>\/a]+)[^<>]*?(src|href)=['|"]([^'"]+)['|"][^<>]*?>/gi, function (...param) {
+			replace(/<([^\s'"<>\/a]+)[^<>]*?(src|href)=['|"]([^'"]+)['|"][^<>]*?>/gi, function(...param) {
 				let sourceUrl = param[3];
 				if (!Util.isRelativeUrl(sourceUrl)) {
 					return param[0];
 				}
 				let curHtmlDir = path.dirname(this.file.relative);
-				let filePath = path.join(curHtmlDir, sourceUrl).replace(/\\/g, "/");
-				filePath = Util.getEntry(filePath);
+				let filePath = config.src + path.join(curHtmlDir, sourceUrl);
+				filePath = Util.formatPath(filePath);
+				var isEntry = Util.isEntry(filePath);
+				if (isEntry) {
+					filePath = isEntry;
+					jsState.setJs(filePath, "inHtml", true);
+				}
 				filePath = Util.getStyles(filePath);
 				sourceUrl = Util.toVersionUrl(sourceUrl);
 				sourceUrl = Util.addVersion(sourceUrl);

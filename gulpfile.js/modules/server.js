@@ -44,7 +44,6 @@ module.exports = {
 		var actGames = ["balls"];
 		if (!!config.actname && !!config.game) {
 			var devLink;
-			// console.log(actGames.indexOf(config.game));
 			if (actGames.indexOf(config.game) == -1) {
 				devLink = "http://" + config.game + ".web.ztgame.com/act/" + config.actname;
 			}
@@ -69,7 +68,7 @@ module.exports = {
 			server: "./dist",
 			middleware: proxyArr,
 			host: issetHost ? "local.ztgame.com" : "localhost",
-			open: "external"
+			open: false
 		});
 	}
 };
