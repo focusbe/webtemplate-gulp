@@ -37,12 +37,13 @@ function pkgEntries(entries) {
 					})
 						.transform(babelify, {
 							//此处babel的各配置项格式与.babelrc文件相同
+
 							presets: [
 								[
 									"@babel/preset-env", //转换es6代码
 									{
 										targets: {
-											esmodules: true
+											browsers: ["ie >= 7"]
 										}
 									}
 								]
@@ -56,7 +57,12 @@ function pkgEntries(entries) {
 								[
 									"@babel/plugin-transform-runtime",
 									{
-										corejs: 2
+										corejs: 2,
+										absoluteRuntime: true,
+										helpers: true,
+										regenerator: true,
+										useESModules: false,
+										fn:true
 									}
 								]
 							]
