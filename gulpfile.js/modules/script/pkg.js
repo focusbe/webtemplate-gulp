@@ -37,32 +37,15 @@ function pkgEntries(entries) {
 					})
 						.transform(babelify, {
 							//此处babel的各配置项格式与.babelrc文件相同
-
-							presets: [
-								[
-									"@babel/preset-env", //转换es6代码
-									{
-										targets: {
-											browsers: ["ie >= 7"]
-										}
-									}
-								]
-							],
+							presets: [["@babel/preset-env"]],
 							plugins: [
-								// ["module-resolver", {
-								// 	"alias": {
-								// 		"ztgamejs": "./ztgamejs"
-								// 	}
-								// }],
 								[
 									"@babel/plugin-transform-runtime",
 									{
-										corejs: 2,
-										absoluteRuntime: true,
+										corejs: 3,
 										helpers: true,
 										regenerator: true,
-										useESModules: false,
-										fn:true
+										useESModules: false
 									}
 								]
 							]

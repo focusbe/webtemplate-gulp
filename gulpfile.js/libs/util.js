@@ -33,7 +33,7 @@ var Util = {
 		try {
 			let content = await fs.readFile(file, "utf8");
 			if (!!content) {
-				let es6Reg = new RegExp(/(\/\/\s*es6)|((let|const|async|await)\s+=)|(=(\s*)>)/gis);
+				let es6Reg = new RegExp(/(\/\/\s*es6)|((let|const|async|await|Promise)\s+)|(=(\s*)>)|(\$\{)/gis);
 				if (content.search(es6Reg) > -1) {
 					return true;
 				}
