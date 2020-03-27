@@ -37,6 +37,9 @@ function pkgEntries(entries) {
 					})
 						.transform(babelify, {
 							//此处babel的各配置项格式与.babelrc文件相同
+							global:true,
+							ignore:[/(babel|core-js|corejs)/],
+							// only:[/ztgamejs/,/js/],
 							presets: [["@babel/preset-env"]],
 							plugins: [
 								[

@@ -51,10 +51,9 @@
 		"tinypngjs": "^1.0.5",
 		"vinyl-buffer": "^1.0.1",
 		"vinyl-source-stream": "^2.0.0",
-		"yargs": "^14.2.0"
+		"yargs": "^14.2.0",
+		"ztgamejs": "^0.0.11"
 	},
-	"dependencies": {
-		"grequirejs": "^0.0.6"
-	},
+	"dependencies": {},
 	"browserslist": "last 3 versions,ie >= 8"
 }
