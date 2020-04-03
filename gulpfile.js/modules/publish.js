@@ -48,7 +48,7 @@ async function PublishDev() {
 				let open = require("open");
 				let acturl;
 				if (config.game != "balls") {
-					acturl = `http://${config.game}.web.ztgame.com/site/act/${config.actname}`;
+					acturl = `http://${config.game}.web.ztgame.com/act/${config.actname}`;
 				} else {
 					acturl = `http://act.${config.game}.web.ztgame.com/${config.actname}`;
 				}

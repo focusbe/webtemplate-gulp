@@ -47,11 +47,12 @@ function images(cb2) {
 	}
 	glob(`${config.src}**/*.{png,jpg,gif,ico,svg}`, (error, files) => {
 		total = files.length;
+		console.log(total);
 		files.map((file, key) => {
 			let relativePath = file.replace(config.src, "");
 			let outPath = path.resolve(config.dist, path.dirname(Utli.toVersionUrl(relativePath)), path.basename(relativePath));
-			console.log(outPath);
-			console.log(relativePath);
+			// console.log(outPath);
+			// console.log(relativePath);
 			var stat = fse.statSync(file);
 			var compressed = db
 				.get("images")
@@ -59,9 +60,11 @@ function images(cb2) {
 				.value();
 
 			if (!stat || !stat.mtimeMs || !compressed || compressed.mtimeMs != stat.mtimeMs) {
+				console.log('压缩'+file);
 				tinypng
 					.compressImg(file, file)
 					.then(res => {
+						console.log(res);
 						if (!!res) {
 							stat = fse.statSync(file);
 							if (!compressed) {
@@ -78,6 +81,7 @@ function images(cb2) {
 						checkLoaded(file, outPath);
 					})
 					.catch(err => {
+						console.log(err);
 						checkLoaded(file, outPath);
 					});
 			} else {
