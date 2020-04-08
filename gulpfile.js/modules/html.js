@@ -6,17 +6,21 @@ const replace = require("gulp-replace");
 const reload = require("./server").reload;
 const Util = require("../libs/util.js");
 const jsState = require("./script/state");
+const fileinclude = require("gulp-file-include");
 function html() {
 	global.entries = [];
 	global.cssFiles = [];
 	let htmltask = src(`${config.src}**/*.{html,shtml}`)
 		.pipe(
+			fileinclude()
+		)
+		.pipe(
 			htmlmin({
-				collapseWhitespace: true
+				collapseWhitespace: true,
 			})
 		)
 		.pipe(
-			replace(/<([^\s'"<>\/a]+)[^<>]*?(src|href)=['|"]([^'"]+)['|"][^<>]*?>/gi, function(...param) {
+			replace(/<([^\s'"<>\/a]+)[^<>]*?(src|href)=['|"]([^'"]+)['|"][^<>]*?>/gi, function (...param) {
 				let sourceUrl = param[3];
 				if (!Util.isRelativeUrl(sourceUrl)) {
 					return param[0];

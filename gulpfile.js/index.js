@@ -3,7 +3,7 @@ global.pkgFiles = {
 	'js': [".js"],
 	'css': ['.less', '.styl', '.stylus'],
 	'img': ['.png', '.jpg', '.gif', '.ico', '.svg'],
-	'html': ['.html', '.shtml']
+	'html': ['.html', '.shtml','.tpl']
 }
 
 var copyglob = [`${config.src}**/*.*`];
