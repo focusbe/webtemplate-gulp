@@ -18,7 +18,7 @@ async function watch() {
 	});
 	gulpwatch(config.src + "**/*.{shtml,html}", series(html, css, script));
 	gulpwatch(config.src + "**/*.{less, styl, stylus}", css);
-	gulpwatch(config.src + "**/*.{png,jpg,gif,ico,svg}", images);
+	gulpwatch(config.src + "**/*.{png,jpg,gif,ico,svg}", images('dev'));
 	gulpwatch(copyglob, copy);
 }
 module.exports = watch;
