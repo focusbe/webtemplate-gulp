@@ -14,6 +14,7 @@ const through = require("through2");
 const jsState = require("./state");
 const reload = require("../server").reload;
 const Copy = require("./copy");
+const es3ify = require("gulp-es3ify");
 function pkgEntries(entries) {
 	var promiseArr = [];
 	if (typeof entries == "string") {
@@ -54,7 +55,7 @@ function pkgEntries(entries) {
 							]
 						})
 						.on("bundle", function(bundle) {
-							console.log("打包" + filename);
+							console.log("打包" + entry);
 						})
 						.on("file", function(filename) {
 							let relativePath = path.relative(path.resolve(__dirname, "../../../"), filename);
@@ -72,7 +73,8 @@ function pkgEntries(entries) {
 						})
 						.pipe(source(filename))
 						.pipe(buffer())
-						.pipe(gulpif(!DEBUG, uglify()))
+						.pipe(gulpif(!DEBUG, uglify({ie8:true})))
+						.pipe(gulpif(!DEBUG, es3ify()))
 						.pipe(dest(outDir))
 						.pipe(reload({ stream: true }))
 						.pipe(

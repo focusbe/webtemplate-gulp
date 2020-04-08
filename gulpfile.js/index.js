@@ -32,8 +32,8 @@ function setTasks() {
 	task("pubdev", publish);
 	task("cdn", clearCdn)
 	task("script", script);
-	task("build", series(cleanDist, html, css, script, images, copy));
-	task("dev", series(cleanDist, html, css, script, images, copy, Watch, server));
+	task("build", series(cleanDist, html, css, script, images('pro'), copy));
+	task("dev", series(cleanDist, html, css, script, images('dev'), copy, Watch, server));
 }
 setTasks();
 exports.default = function () { };

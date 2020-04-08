@@ -40,7 +40,7 @@ async function Scripts(cb) {
 					await Pkg([curfile]);
 				}
 				if (jsProp.inJs) {
-					await Pkg([jsProp.inJs]);
+					await Pkg(jsProp.inJs);
 				}
 			}
 		}
