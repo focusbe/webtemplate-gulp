@@ -44,7 +44,7 @@
 		"gulp-stylus": "^2.7.0",
 		"gulp-uglify": "^3.0.2",
 		"http-proxy-middleware": "^0.20.0",
-		"jquery": "1",
+		"jquery": "3",
 		"lowdb": "^1.0.0",
 		"merge-stream": "^2.0.0",
 		"open": "^7.0.0",
